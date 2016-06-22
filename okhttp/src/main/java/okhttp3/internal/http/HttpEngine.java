@@ -300,6 +300,10 @@ public final class HttpEngine {
       return null; // The application layer has forbidden retries.
     }
 
+    if (userRequest.body() instanceof UnrepeatableRequestBody) {
+      return null; // We can't send the request body again.
+    }
+
     if (!isRecoverable(e, routeException)) {
       return null; // This exception is fatal.
     }
